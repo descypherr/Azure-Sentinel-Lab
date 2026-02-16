@@ -1,0 +1,22 @@
+Detection Logic & Tuning (KQL)
+In this project, I demonstrated the ability to identify a False Negative gap and tune the detection logic to ensure 100% visibility.
+
+Version 1: Initial Query (The Gap)
+This query was too narrow. It failed to detect the resource deletion because it only looked for the exact string "Succeeded". As discovered during testing, Azure logs often record status as "Success", meaning this version would miss critical security events.
+
+// Detection Name: Unauthorized Resource Changes (V1)
+// Status: Ineffective (Missing "Success" string)
+AzureActivity
+| where OperationNameValue contains "WRITE" or OperationNameValue contains "DELETE"
+| where ActivityStatusValue == "Succeeded"
+| summarize count() by Caller, OperationNameValue, CallerIpAddress, TimeGenerated
+
+Version 2: Tuned Query (The Solution)
+I optimized the query by switching to the has operator for faster string matching and implemented an or condition to capture both "Success" and "Succeeded". This ensures that regardless of the log's specific string formatting, the incident is successfully generated in Microsoft Defender.
+
+// Detection Name: Unauthorized Resource Changes (V2)
+// Status: Production-Ready (Comprehensive Detection)
+AzureActivity
+| where OperationNameValue has "WRITE" or OperationNameValue has "DELETE"
+| where ActivityStatusValue == "Success" or ActivityStatusValue == "Succeeded"
+| summarize count() by Caller, OperationNameValue, CallerIpAddress, TimeGenerated
