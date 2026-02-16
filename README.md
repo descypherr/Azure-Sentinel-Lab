@@ -18,13 +18,14 @@ This project involved the end-to-end deployment of **Microsoft Sentinel** (SIEM)
 
 ### 1. Infrastructure & Governance
 I deployed a **Log Analytics Workspace (SOC-Workspace)** in the South Africa North region to serve as the central repository for security data. To ensure persistent monitoring, I utilized **Azure Policy** to automatically stream all subscription-level Activity Logs to the SIEM, ensuring 100% visibility of administrative actions.
+Screenshots:
 [Setup Validation](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/1.%20Setup.png)
-![Policy Assignment](2. Policy.png)
+[Policy Assignment](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/2.%20Policy.png)
 
 ### 2. Telemetry Verification
 Before building detection rules, I performed manual log verification using **KQL**. This ensured the "heartbeat" of the system was active and that data was being ingested correctly from the Azure platform.
-
-![Log Flow Verification](3. Log Verification.png)
+Screenshots:
+[Log Verification][(https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/1.%20Setup.png](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/3.%20Log%20Verification.png))
 
 ### 3. Detection Engineering & Rule Tuning
 I engineered a custom Analytic Rule, **"Unauthorized Resource Changes,"** to monitor for critical resource deletions.
