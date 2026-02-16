@@ -1,41 +1,50 @@
-#🛡️ Cloud SIEM & Detection Lab (Microsoft Sentinel)
+# 🛡️ Cloud SIEM & Detection Lab: Microsoft Sentinel 
 
-#Objective
-To deploy a cloud-native SIEM (Security Information and Event Management) system using Microsoft Sentinel to provide 24/7 visibility into Azure cloud infrastructure. I simulated an "Unauthorized Resource Deletion" attack and tuned detection logic to successfully alert on the event.
+## Executive Summary
+This project involved the end-to-end deployment of **Microsoft Sentinel** (SIEM) and **Microsoft Defender for Cloud** to secure a live Azure environment. The primary goal was to establish deep visibility into administrative actions and engineer custom detection logic to identify unauthorized resource deletions, simulating a common insider threat or credential compromise scenario.
 
-#Technologies & Tools Used
--Microsoft Sentinel (SIEM/SOAR)
--Log Analytics Workspace (SOC-Workspace)
--Kusto Query Language (KQL)
--Microsoft Defender for Cloud (Unified SecOps)
--Azure Activity Logs
+---
 
-#Project Walkthrough
+## Technical Stack
+* **SIEM/SOAR:** Microsoft Sentinel
+* **Log Management:** Log Analytics Workspace (SOC-Workspace)
+* **Governance:** Azure Policy (Activity Log Streaming)
+* **Detection Engineering:** Kusto Query Language (KQL)
+* **Incident Response:** Unified Microsoft Defender Portal (Unified SecOps)
 
-#Step 1: Environment Setup
-I deployed a Log Analytics Workspace and enabled Microsoft Sentinel to serve as the centralized "brain" for security telemetry.
-[Insert Screenshot #1: Sentinel Overview/Workspace Active]
+---
 
-#Step 2: Data Ingestion & Governance
-I connected the Azure Activity data source and applied a global Azure Policy to ensure all resource logs are automatically streamed to the SIEM.
-[Insert Screenshot #2: Data Connector Status "Connected"]
-[Insert Screenshot #3: Policy Assignment & Scope]
+## Project Walkthrough
 
-#Step 3: Log Verification (KQL)
-Using the Kusto Query Language (KQL), I verified that telemetry was flowing correctly from the Azure platform into the workspace.
-[Insert Screenshot #4: AzureActivity KQL Results Table]
+### 1. Infrastructure & Governance
+I deployed a **Log Analytics Workspace (SOC-Workspace)** in the South Africa North region to serve as the central repository for security data. To ensure persistent monitoring, I utilized **Azure Policy** to automatically stream all subscription-level Activity Logs to the SIEM, ensuring 100% visibility of administrative actions.
 
-#Step 4: Custom Detection Rule & Rule Tuning
-I created a scheduled analytics rule to detect unauthorized resource changes.
-Critical Skill Demonstrated: During testing, I identified that Azure logs were using Success while my initial rule looked for Succeeded. I tuned the KQL logic to account for both, ensuring 100% detection reliability.
+![Setup Validation](1. Setup.png)
+![Policy Assignment](2. Policy.png)
 
-[Insert Screenshot #5: Rule General Tab with MITRE Tactics]
-[Insert Screenshot #6: Final Tuned KQL Logic]
-[Insert Screenshot #7: Validation Passed Screen]
+### 2. Telemetry Verification
+Before building detection rules, I performed manual log verification using **KQL**. This ensured the "heartbeat" of the system was active and that data was being ingested correctly from the Azure platform.
 
-#Step 5: Incident Lifecycle & Verification
-I triggered the alert by creating and deleting a test resource group (Testing-Final-Test). The SIEM successfully detected the "attack" and generated an incident in the Microsoft Defender portal.
-[Insert Screenshot #8: The "Money Shot" - Triggered Incident in Defender]
+![Log Flow Verification](3. Log Verification.png)
 
-Conclusion
-This lab demonstrates the end-to-end SOC lifecycle: ingestion, detection engineering, and incident response. Navigating the 2026 migration to the Unified Defender Portal also highlights my ability to adapt to the latest industry standards in SecOps.
+### 3. Detection Engineering & Rule Tuning
+I engineered a custom Analytic Rule, **"Unauthorized Resource Changes,"** to monitor for critical resource deletions.
+
+* **Rule Tuning:** During testing, I identified a discrepancy where logs were flagged with an `ActivityStatusValue` of `Success`, whereas the initial rule logic only looked for `Succeeded`. I updated the KQL logic to account for both, significantly reducing **False Negatives** and ensuring 100% detection reliability.
+
+![Rule Configuration](4. Rule General.png)
+![KQL Logic](5. Rule Logic.png)
+![Validation](6. Validation.png)
+
+### 4. Attack Simulation & Incident Triage
+I simulated an unauthorized deletion of a resource group (`Testing-final-test`). The system successfully generated a **Medium-severity Incident** in the Defender portal. I then triaged the incident to verify the attacker's identity (Caller) and the source IP address.
+
+![Attack Simulation](7. The Attack.png)
+![Detected Incident](8. The Alert.png)
+
+---
+
+## Professional Takeaways
+* **Detection Efficacy:** Identified and resolved a critical log schema discrepancy (`Success` vs `Succeeded`) to prevent missed alerts in a production environment.
+* **Unified SecOps:** Gained hands-on experience with the 2026 migration to the **Microsoft Defender Unified Portal**, demonstrating adaptability to current industry standards.
+* **Governance at Scale:** Demonstrated how to use Azure Policy to enforce security logging standards across a cloud environment.
