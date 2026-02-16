@@ -31,16 +31,18 @@ Screenshots:
 I engineered a custom Analytic Rule, **"Unauthorized Resource Changes,"** to monitor for critical resource deletions.
 
 * **Rule Tuning:** During testing, I identified a discrepancy where logs were flagged with an `ActivityStatusValue` of `Success`, whereas the initial rule logic only looked for `Succeeded`. I updated the KQL logic to account for both, significantly reducing **False Negatives** and ensuring 100% detection reliability.
+Screenshots:
+[Rule Configuration](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/4.%20Rule%20General.png)
+[KQL Logic](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/5.%20Rule%20Logic.png)
+[Validation](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/6.%20Validation.png)
 
-![Rule Configuration](4. Rule General.png)
-![KQL Logic](5. Rule Logic.png)
-![Validation](6. Validation.png)
 
 ### 4. Attack Simulation & Incident Triage
 I simulated an unauthorized deletion of a resource group (`Testing-final-test`). The system successfully generated a **Medium-severity Incident** in the Defender portal. I then triaged the incident to verify the attacker's identity (Caller) and the source IP address.
+Screenshots:
+[Attack Simulation](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/7.%20The%20Attack.png)
+[Detected Incident](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/8.%20The%20Alert.png)
 
-![Attack Simulation](7. The Attack.png)
-![Detected Incident](8. The Alert.png)
 
 ---
 
