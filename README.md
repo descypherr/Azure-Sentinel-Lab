@@ -18,8 +18,7 @@ This project involved the end-to-end deployment of **Microsoft Sentinel** (SIEM)
 
 ### 1. Infrastructure & Governance
 I deployed a **Log Analytics Workspace (SOC-Workspace)** in the South Africa North region to serve as the central repository for security data. To ensure persistent monitoring, I utilized **Azure Policy** to automatically stream all subscription-level Activity Logs to the SIEM, ensuring 100% visibility of administrative actions.
-
-![Setup Validation](1. Setup.png)
+[Setup Validation](https://github.com/descypherr/Azure-Sentinel-Lab/blob/main/screenshots/1.%20Setup.png)
 ![Policy Assignment](2. Policy.png)
 
 ### 2. Telemetry Verification
